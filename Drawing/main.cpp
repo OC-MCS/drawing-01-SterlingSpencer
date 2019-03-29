@@ -1,5 +1,8 @@
 //================================================
-// YOUR NAME GOES HERE <-----------------  
+// Sterling Spencer <-----------------  
+// Programming Assignment 6 Drawing
+// Professor Harbert
+// Due 3/29/19
 //================================================
 #include <iostream>
 #include <fstream>
@@ -29,6 +32,14 @@ int main()
 	DrawingUI   drawingUI(Vector2f(200, 50));
 	
 	// ********* Add code here to make the managers read from shapes file (if the file exists)
+	fstream takeIn;
+	takeIn.open("shapes.bin", ios::in | ios::binary);
+	if (takeIn)
+	{
+		settingsMgr.readFile(takeIn);
+		shapeMgr.readFile(takeIn);
+	}
+	takeIn.close();
 
 	while (window.isOpen()) 
 	{
@@ -39,6 +50,11 @@ int main()
 			{
 				window.close();
 				// ****** Add code here to write all data to shapes file
+				fstream sendOut;
+				sendOut.open("shapes.bin", ios::out | ios::binary);
+				settingsMgr.writeToFile(sendOut);
+				shapeMgr.writeToFile(sendOut);
+				takeIn.close();
 			}
 			else if (event.type == Event::MouseButtonReleased)
 			{
